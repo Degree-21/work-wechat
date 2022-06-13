@@ -63,6 +63,13 @@ func NewSetSessionInfo(suitAccessToken string, preAuthCode string, info SessionI
 	)
 }
 
+func Code2Session(suiteAccessToken string, jsCode string) Action {
+	reqUrl := BaseWeWorkUrl + fmt.Sprintf("/cgi-bin/service/miniprogram/jscode2session?suite_access_token=%s&js_code=%s&grant_type=authorization_code", suiteAccessToken, jsCode)
+	return NewWeWordApi(reqUrl,
+		WitchMethod(HttpGet),
+	)
+}
+
 /**
  * @Description: 设置授权配置
  * @author:ljj
@@ -106,6 +113,26 @@ func (a *auth) GetPermanentCode(authCode string) (*RespGetPermanentCode, error) 
 	}
 	if opt.ErrCode != 0 {
 		return nil, errors.New("获取永久授权码失败" + opt.ErrMsg)
+	}
+	return opt, nil
+}
+
+//@Description: 根据授权code换取session信息
+//@author:hy
+//@receiver a
+//@param jsCode
+//@return *RespCode2Session
+//@return error
+func (a *auth) GetCode2Session(jsCode string) (*RespCode2Session, error) {
+	suiteAccessToken := a.workWechat.NewAccessToken().GetSuiteAccessTokenByCache()
+
+	opt := &RespCode2Session{}
+	err := a.workWechat.Scan(context.Background(), Code2Session(suiteAccessToken, jsCode), opt)
+	if err != nil {
+		return nil, err
+	}
+	if opt.ErrCode != 0 {
+		return nil, errors.New("设置授权配置失败" + opt.ErrMsg)
 	}
 	return opt, nil
 }

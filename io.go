@@ -154,6 +154,18 @@ func (x reqGetPermanentCode) intoBody() ([]byte, error) {
 	return result, nil
 }
 
+type RespCode2Session struct {
+	respCommon
+	code2SessionData
+}
+
+type code2SessionData struct {
+	CorpID     string `json:"corpid"`
+	UserID     string `json:"userid"`
+	SessionKey string `json:"session_key"`
+	OpenUserID string `json:"open_userid"`
+}
+
 // RespGetPermanentCode 永久授权码校验
 type RespGetPermanentCode struct {
 	respCommon
@@ -172,19 +184,18 @@ type PermanentCode struct {
 	RegisterCodeInfo RegisterCodeInfo `json:"register_code_info"`
 }
 
-
 /**
 设置授权配置
 */
 // reqSetSessionInfo 获取永久授权码校验
 type reqSetSessionInfo struct {
-	PreAuthCode string `json:"pre_auth_code"`
+	PreAuthCode string      `json:"pre_auth_code"`
 	SessionInfo SessionInfo `json:"session_info"`
 }
 
 type SessionInfo struct {
-	AppId []string `json:"appid"`
-	AuthType int `json:"auth_type"`
+	AppId    []string `json:"appid"`
+	AuthType int      `json:"auth_type"`
 }
 
 var _ bodyer = reqSetSessionInfo{}

@@ -14,62 +14,62 @@ type externalContactListDetails struct {
 type ExternalContactUserInfo struct {
 	respCommon
 	ExternalContact externalContactStruct `json:"external_contact"`
-	FollowUser []*followUser `json:"follow_user"`
-	NextCursor string `json:"next_cursor"`
+	FollowUser      []*followUser         `json:"follow_user"`
+	NextCursor      string                `json:"next_cursor"`
 }
 
 type externalContactStruct struct {
-	ExternalUserid string `json:"external_userid"`
-	Name string `json:"name"`
-	Position string `json:"position"`
-	Avatar string `json:"avatar"`
-	CorpName string `json:"corp_name"`
-	CorpFullName string `json:"corp_full_name"`
-	Type int `json:"type"`
-	Gender int `json:"gender"`
-	Unionid string `json:"unionid"`
+	ExternalUserid  string `json:"external_userid"`
+	Name            string `json:"name"`
+	Position        string `json:"position"`
+	Avatar          string `json:"avatar"`
+	CorpName        string `json:"corp_name"`
+	CorpFullName    string `json:"corp_full_name"`
+	Type            int    `json:"type"`
+	Gender          int    `json:"gender"`
+	Unionid         string `json:"unionid"`
 	ExternalProfile struct {
 		ExternalAttr []struct {
-			Type int `json:"type"`
+			Type int    `json:"type"`
 			Name string `json:"name"`
 			Text struct {
 				Value string `json:"value"`
 			} `json:"text,omitempty"`
 			Web struct {
-				URL string `json:"url"`
+				URL   string `json:"url"`
 				Title string `json:"title"`
 			} `json:"web,omitempty"`
 			Miniprogram struct {
-				Appid string `json:"appid"`
+				Appid    string `json:"appid"`
 				Pagepath string `json:"pagepath"`
-				Title string `json:"title"`
+				Title    string `json:"title"`
 			} `json:"miniprogram,omitempty"`
 		} `json:"external_attr"`
 	} `json:"external_profile"`
 }
 
 type followUser struct {
-	Userid string `json:"userid"`
-	Remark string `json:"remark"`
+	Userid      string `json:"userid"`
+	Remark      string `json:"remark"`
 	Description string `json:"description"`
-	Createtime int `json:"createtime"`
-	Tags []struct {
+	Createtime  int    `json:"createtime"`
+	Tags        []struct {
 		GroupName string `json:"group_name"`
-		TagName string `json:"tag_name"`
-		TagID string `json:"tag_id"`
-		Type int `json:"type"`
+		TagName   string `json:"tag_name"`
+		TagID     string `json:"tag_id"`
+		Type      int    `json:"type"`
 	} `json:"tags,omitempty"`
-	RemarkCorpName string `json:"remark_corp_name,omitempty"`
-	RemarkMobiles []string `json:"remark_mobiles,omitempty"`
-	OperUserid string `json:"oper_userid"`
-	AddWay int `json:"add_way"`
-	State string `json:"state,omitempty"`
+	RemarkCorpName string   `json:"remark_corp_name,omitempty"`
+	RemarkMobiles  []string `json:"remark_mobiles,omitempty"`
+	OperUserid     string   `json:"oper_userid"`
+	AddWay         int      `json:"add_way"`
+	State          string   `json:"state,omitempty"`
 }
 
 // 发送欢迎语
 type reqSendWelcomeMsg struct {
-	WelcomeCode string `json:"welcome_code"`
-	Text Text `json:"text"`
+	WelcomeCode string        `json:"welcome_code"`
+	Text        Text          `json:"text"`
 	Attachments []Attachments `json:"attachments"`
 }
 type Text struct {
@@ -77,35 +77,34 @@ type Text struct {
 }
 type Image struct {
 	MediaID string `json:"media_id"`
-	PicURL string `json:"pic_url"`
+	PicURL  string `json:"pic_url"`
 }
 type Link struct {
-	Title string `json:"title"`
+	Title  string `json:"title"`
 	Picurl string `json:"picurl"`
-	Desc string `json:"desc"`
-	URL string `json:"url"`
+	Desc   string `json:"desc"`
+	URL    string `json:"url"`
 }
 type Miniprogram struct {
-	Title string `json:"title"`
+	Title      string `json:"title"`
 	PicMediaID string `json:"pic_media_id"`
-	Appid string `json:"appid"`
-	Page string `json:"page"`
+	Appid      string `json:"appid"`
+	Page       string `json:"page"`
 }
 type Video struct {
 	MediaID string `json:"media_id"`
 }
 type Attachments struct {
-	Msgtype string `json:"msgtype"`
-	Image Image `json:"image,omitempty"`
-	Link Link `json:"link,omitempty"`
+	Msgtype     string      `json:"msgtype"`
+	Image       Image       `json:"image,omitempty"`
+	Link        Link        `json:"link,omitempty"`
 	Miniprogram Miniprogram `json:"miniprogram,omitempty"`
-	Video Video `json:"video,omitempty"`
+	Video       Video       `json:"video,omitempty"`
 }
 
 type RespSendWelcomeMsg struct {
 	respCommon
 }
-
 
 type RespGetFollowUserList struct {
 	respCommon
@@ -115,23 +114,32 @@ type RespGetFollowUserList struct {
 type AddContactWayResp struct {
 	respCommon
 	ConfigID string `json:"config_id"`
-	QrCode string `json:"qr_code"`
+	QrCode   string `json:"qr_code"`
+}
+
+type OpenGidToChatIdReq struct {
+	OpenGid string `json:"opengid"` //群的opengid,由前端加密数据解得opengid
+}
+
+type OpenGidToChatIdResp struct {
+	respCommon
+	ChatID string `json:"chat_id"` //群chat_id
 }
 
 type AddContactWayReq struct {
-	Type int `json:"type"`
-	Scene int `json:"scene"`
-	Style int `json:"style"`
-	Remark string `json:"remark"`
-	SkipVerify bool `json:"skip_verify"`
-	State string `json:"state"`
-	User []string `json:"user"`
-	Party []int `json:"party"`
-	IsTemp bool `json:"is_temp"`
-	ExpiresIn int `json:"expires_in"`
-	ChatExpiresIn int `json:"chat_expires_in"`
-	Unionid string `json:"unionid"`
-	Conclusions struct {
+	Type          int      `json:"type"`
+	Scene         int      `json:"scene"`
+	Style         int      `json:"style"`
+	Remark        string   `json:"remark"`
+	SkipVerify    bool     `json:"skip_verify"`
+	State         string   `json:"state"`
+	User          []string `json:"user"`
+	Party         []int    `json:"party"`
+	IsTemp        bool     `json:"is_temp"`
+	ExpiresIn     int      `json:"expires_in"`
+	ChatExpiresIn int      `json:"chat_expires_in"`
+	Unionid       string   `json:"unionid"`
+	Conclusions   struct {
 		Text struct {
 			Content string `json:"content"`
 		} `json:"text"`
@@ -139,16 +147,126 @@ type AddContactWayReq struct {
 			MediaID string `json:"media_id"`
 		} `json:"image"`
 		Link struct {
-			Title string `json:"title"`
+			Title  string `json:"title"`
 			Picurl string `json:"picurl"`
-			Desc string `json:"desc"`
-			URL string `json:"url"`
+			Desc   string `json:"desc"`
+			URL    string `json:"url"`
 		} `json:"link"`
 		Miniprogram struct {
-			Title string `json:"title"`
+			Title      string `json:"title"`
 			PicMediaID string `json:"pic_media_id"`
-			Appid string `json:"appid"`
-			Page string `json:"page"`
+			Appid      string `json:"appid"`
+			Page       string `json:"page"`
 		} `json:"miniprogram"`
 	} `json:"conclusions"`
+}
+
+type AddGroupWelcomeTemplateReq struct {
+	Text struct {
+		Content string `json:"content"`
+	} `json:"text"`
+	Image struct {
+		MediaID string `json:"media_id"`
+		PicURL  string `json:"pic_url"`
+	} `json:"image"`
+	Link struct {
+		Title  string `json:"title"`
+		PicURL string `json:"picurl"`
+		Desc   string `json:"desc"`
+		URL    string `json:"url"`
+	} `json:"link"`
+	MiniProgram struct {
+		Title      string `json:"title"`
+		PicMediaID string `json:"pic_media_id"`
+		AppID      string `json:"appid"`
+		Page       string `json:"page"`
+	} `json:"miniprogram"`
+	File struct {
+		MediaID string `json:"media_id"`
+	} `json:"file"`
+	Video struct {
+		MediaID string `json:"media_id"`
+	} `json:"video"`
+	AgentID int `json:"agentid"`
+	Notify  int `json:"notify"`
+}
+
+type AddGroupWelcomeTemplateResp struct {
+	respCommon
+	TemplateId string `json:"template_id"`
+}
+
+type EditGroupWelcomeTemplateReq struct {
+	TemplateID string `json:"template_id"`
+	Text       struct {
+		Content string `json:"content"`
+	} `json:"text"`
+	Image struct {
+		MediaID string `json:"media_id"`
+		PicURL  string `json:"pic_url"`
+	} `json:"image"`
+	Link struct {
+		Title  string `json:"title"`
+		PicURL string `json:"picurl"`
+		Desc   string `json:"desc"`
+		URL    string `json:"url"`
+	} `json:"link"`
+	MiniProgram struct {
+		Title      string `json:"title"`
+		PicMediaID string `json:"pic_media_id"`
+		AppID      string `json:"appid"`
+		Page       string `json:"page"`
+	} `json:"miniprogram"`
+	File struct {
+		MediaID string `json:"media_id"`
+	} `json:"file"`
+	Video struct {
+		MediaID string `json:"media_id"`
+	} `json:"video"`
+	AgentID int `json:"agentid"`
+}
+
+type EditGroupWelcomeTemplateResp struct {
+	respCommon
+}
+
+type GetGroupWelcomeTemplateReq struct {
+	TemplateId string `json:"template_id"`
+}
+
+type GetGroupWelcomeTemplateResp struct {
+	respCommon
+	Text struct {
+		Content string `json:"content"`
+	} `json:"text"`
+	Image struct {
+		PicURL string `json:"pic_url"`
+	} `json:"image"`
+	Link struct {
+		Title  string `json:"title"`
+		PicURL string `json:"picurl"`
+		Desc   string `json:"desc"`
+		URL    string `json:"url"`
+	} `json:"link"`
+	MiniProgram struct {
+		Title      string `json:"title"`
+		PicMediaID string `json:"pic_media_id"`
+		AppID      string `json:"appid"`
+		Page       string `json:"page"`
+	} `json:"miniprogram"`
+	File struct {
+		MediaID string `json:"media_id"`
+	} `json:"file"`
+	Video struct {
+		MediaID string `json:"media_id"`
+	} `json:"video"`
+}
+
+type DeleteGroupWelcomeTemplateReq struct {
+	TemplateId string `json:"template_id"`
+	AgentId    int    `json:"agentid"`
+}
+
+type DeleteGroupWelcomeTemplateResp struct {
+	respCommon
 }

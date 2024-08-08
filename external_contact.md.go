@@ -1,6 +1,6 @@
 package work
 
-// 外部联系人列表
+// 外部联系人列表 17
 type ExternalContactList struct {
 	respCommon
 	externalContactListDetails
@@ -162,33 +162,51 @@ type AddContactWayReq struct {
 }
 
 type AddGroupWelcomeTemplateReq struct {
-	Text struct {
-		Content string `json:"content"`
-	} `json:"text"`
-	Image struct {
-		MediaID string `json:"media_id"`
-		PicURL  string `json:"pic_url"`
-	} `json:"image"`
-	Link struct {
-		Title  string `json:"title"`
-		PicURL string `json:"picurl"`
-		Desc   string `json:"desc"`
-		URL    string `json:"url"`
-	} `json:"link"`
-	MiniProgram struct {
-		Title      string `json:"title"`
-		PicMediaID string `json:"pic_media_id"`
-		AppID      string `json:"appid"`
-		Page       string `json:"page"`
-	} `json:"miniprogram"`
-	File struct {
-		MediaID string `json:"media_id"`
-	} `json:"file"`
-	Video struct {
-		MediaID string `json:"media_id"`
-	} `json:"video"`
-	AgentID int `json:"agentid"`
-	Notify  int `json:"notify"`
+	Text        *GroupWelcomeTemplateText        `json:"text,omitempty"`
+	Image       *GroupWelcomeTemplateImage       `json:"image,omitempty"`
+	Link        *GroupWelcomeTemplateLink        `json:"link,omitempty"`
+	MiniProgram *GroupWelcomeTemplateMiniProgram `json:"miniprogram,omitempty"`
+	File        *GroupWelcomeTemplateFile        `json:"file,omitempty"`
+	Video       *GroupWelcomeTemplateVideo       `json:"video,omitempty"`
+	AgentID     int                              `json:"agentid"`
+	Notify      int                              `json:"notify"`
+}
+
+// GroupWelcomeTemplateText defines the text part of the welcome template.
+type GroupWelcomeTemplateText struct {
+	Content string `json:"content,omitempty"`
+}
+
+// GroupWelcomeTemplateImage defines the image part of the welcome template.
+type GroupWelcomeTemplateImage struct {
+	MediaID string `json:"media_id,omitempty"`
+	PicURL  string `json:"pic_url,omitempty"`
+}
+
+// GroupWelcomeTemplateLink defines the link part of the welcome template.
+type GroupWelcomeTemplateLink struct {
+	Title  string `json:"title,omitempty"`
+	PicURL string `json:"picurl,omitempty"`
+	Desc   string `json:"desc,omitempty"`
+	URL    string `json:"url,omitempty"`
+}
+
+// GroupWelcomeTemplateMiniProgram defines the mini program part of the welcome template.
+type GroupWelcomeTemplateMiniProgram struct {
+	Title      string `json:"title,omitempty"`
+	PicMediaID string `json:"pic_media_id,omitempty"`
+	AppID      string `json:"appid,omitempty"`
+	Page       string `json:"page,omitempty"`
+}
+
+// GroupWelcomeTemplateFile defines the file part of the welcome template.
+type GroupWelcomeTemplateFile struct {
+	MediaID string `json:"media_id,omitempty"`
+}
+
+// GroupWelcomeTemplateVideo defines the video part of the welcome template.
+type GroupWelcomeTemplateVideo struct {
+	MediaID string `json:"media_id,omitempty"`
 }
 
 type AddGroupWelcomeTemplateResp struct {
@@ -197,33 +215,14 @@ type AddGroupWelcomeTemplateResp struct {
 }
 
 type EditGroupWelcomeTemplateReq struct {
-	TemplateID string `json:"template_id"`
-	Text       struct {
-		Content string `json:"content"`
-	} `json:"text"`
-	Image struct {
-		MediaID string `json:"media_id"`
-		PicURL  string `json:"pic_url"`
-	} `json:"image"`
-	Link struct {
-		Title  string `json:"title"`
-		PicURL string `json:"picurl"`
-		Desc   string `json:"desc"`
-		URL    string `json:"url"`
-	} `json:"link"`
-	MiniProgram struct {
-		Title      string `json:"title"`
-		PicMediaID string `json:"pic_media_id"`
-		AppID      string `json:"appid"`
-		Page       string `json:"page"`
-	} `json:"miniprogram"`
-	File struct {
-		MediaID string `json:"media_id"`
-	} `json:"file"`
-	Video struct {
-		MediaID string `json:"media_id"`
-	} `json:"video"`
-	AgentID int `json:"agentid"`
+	TemplateID  string                           `json:"template_id"`
+	Text        *GroupWelcomeTemplateText        `json:"text,omitempty"`
+	Image       *GroupWelcomeTemplateImage       `json:"image,omitempty"`
+	Link        *GroupWelcomeTemplateLink        `json:"link,omitempty"`
+	MiniProgram *GroupWelcomeTemplateMiniProgram `json:"miniprogram,omitempty"`
+	File        *GroupWelcomeTemplateFile        `json:"file,omitempty"`
+	Video       *GroupWelcomeTemplateVideo       `json:"video,omitempty"`
+	AgentID     int                              `json:"agentid"`
 }
 
 type EditGroupWelcomeTemplateResp struct {

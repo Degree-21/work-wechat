@@ -368,3 +368,31 @@ func (e *externalContact) DelGroupWelcomeTemplate(templateId string, agentId int
 	}
 	return opt, nil
 }
+
+func NewUnionidToExternalUserid3rd(suiteAccessToken string, req *GetUnionidToExternalUserid3rdReq) Action {
+	reqUrl := BaseWeWorkUrl + fmt.Sprintf("/cgi-bin/service/externalcontact/unionid_to_external_userid_3rd?suite_access_token=%s", suiteAccessToken)
+	return NewWeWordApi(reqUrl,
+		WitchMethod(HttpPost),
+		WitchBody(func() (bytes []byte, e error) {
+			jsonInfo, err := json.Marshal(req)
+			if err != nil {
+				return nil, err
+			}
+			return jsonInfo, nil
+		}),
+	)
+}
+
+// 第三方主体unionid转换为第三方external_userid
+func (e *externalContact) GetUnionidToExternalUserid3rd(req *GetUnionidToExternalUserid3rdReq) (*GetUnionidToExternalUserid3rdResp, error) {
+	suiteAccessToken := e.workWechat.NewAccessToken().GetSuiteAccessTokenByCache()
+	opt := &GetUnionidToExternalUserid3rdResp{}
+	err := e.workWechat.Scan(context.Background(), NewUnionidToExternalUserid3rd(suiteAccessToken, req), opt)
+	if err != nil || opt == nil {
+		return nil, err
+	}
+	if opt.ErrCode != 0 {
+		return nil, errors.New("第三方主体unionid转换为第三方external_userid" + opt.ErrMsg)
+	}
+	return opt, nil
+}

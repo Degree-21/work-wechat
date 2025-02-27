@@ -285,3 +285,21 @@ type DeleteGroupWelcomeTemplateReq struct {
 type DeleteGroupWelcomeTemplateResp struct {
 	respCommon
 }
+
+type GetUnionidToExternalUseridReq struct {
+	Unionid string `json:"unionid"` //微信客户的unionid
+	Openid  string `json:"openid"`  //微信客户的openid
+	/*
+		    subject_type
+			小程序或公众号的主体类型：
+			0表示主体名称是企业的 (默认)，
+			1表示主体名称是服务商的
+	*/
+	SubjectType int `json:"subject_type,omitempty"`
+}
+
+type GetGetUnionidToExternalUseridResp struct {
+	respCommon
+	ExternalUserid string `json:"external_userid"` //该授权企业的外部联系人ID
+	PendingId      string `json:"pending_id"`      //该微信账号尚未成为企业客户时，返回的临时外部联系人ID，该ID有效期为90天，当该用户在90天内成为企业客户时，可以通过external_userid查询pending_id关联
+}

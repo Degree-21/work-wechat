@@ -396,3 +396,32 @@ func (e *externalContact) GetUnionidToExternalUserid3rd(req *GetUnionidToExterna
 	}
 	return opt, nil
 }
+
+func (e *externalContact) GetUnionidToExternalUserid(req *GetUnionidToExternalUseridReq) (*GetGetUnionidToExternalUseridResp, error) {
+	cropAccessToken := e.workWechat.NewAccessToken().GetCorpAccessTokenByCache()
+	opt := &GetGetUnionidToExternalUseridResp{}
+	err := e.workWechat.Scan(context.Background(), NewUnionidToExternalUserid(
+		cropAccessToken,
+		req), opt)
+	if err != nil || opt == nil {
+		return nil, err
+	}
+	if opt.ErrCode != 0 {
+		return nil, errors.New("获取unionid与external_userid的关联" + opt.ErrMsg)
+	}
+	return opt, nil
+}
+
+func NewUnionidToExternalUserid(corpAccessToken string, req *GetUnionidToExternalUseridReq) Action {
+	reqUrl := BaseWeWorkUrl + fmt.Sprintf("/cgi-bin/idconvert/unionid_to_external_userid?access_token=%s", corpAccessToken)
+	return NewWeWordApi(reqUrl,
+		WitchMethod(HttpPost),
+		WitchBody(func() (bytes []byte, e error) {
+			jsonInfo, err := json.Marshal(req)
+			if err != nil {
+				return nil, err
+			}
+			return jsonInfo, nil
+		}),
+	)
+}
